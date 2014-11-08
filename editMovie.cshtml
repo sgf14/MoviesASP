@@ -1,0 +1,37 @@
+﻿@{
+// this sets the variables to match based on SQL ID # selected
+   var id=Request["id"];
+//note 'MovieID' matches the DB column name, note that the @0 carries in the id as a parameter from query below
+   var SQLSELECT = "SELECT * FROM Favorites where MovieID=@0";
+   var db = Database.Open("Movies_ASP");
+   var Movie = db.QuerySingle(SQLSELECT,id);
+//this populates the fields w/ the corresponding values for that record- see form action below as a 'value' parameter
+   var MovieName=Movie.MovieName;
+   var MovieYear=Movie.ReleaseYear;
+   var MovieGenre=Movie.Genre;
+   
+// this updates the record; note there is no entry validation here- that would be needed in PROD
+// IsPost is an ASP function and ties back to the form method below
+    if(IsPost){
+        MovieName=Request["formMovieName"];
+        MovieYear=Request["formReleaseYear"];
+        MovieGenre=Request["formGenre"];
+         //it is critical these represent the correct SQL column names & zero based column #
+         //the specific order doesnt matter as you can see these are mixed up below; altough in practice its is best to keep them in logical order for debugging
+         var SQLUPDATE = "UPDATE Favorites Set MovieName=@1, Genre=@3, ReleaseYear=@2 WHERE MovieID=@0";
+         //it is critical these are in the correct column order
+         db.Execute(SQLUPDATE, id, MovieName, MovieYear, MovieGenre);
+         Response.Redirect("movies.cshtml");
+    }
+}
+
+<h1 class="title">Edit a Movie</h1>
+
+<form action="" method="post"> 
+    <p>Name:<input type="text" name="formMovieName" value="@MovieName" /></p>
+    <p>Year:<input type="text" name="formReleaseYear" value="@MovieYear" /></p>
+    <p>Genre:<input type="text" name="formGenre" value="@MovieGenre" /></p>
+@*    a submit type button triggers an HTTP post- corresponding to method above*@
+    <p><input type="submit" value="Edit Movie" /></p>
+ </form>
+

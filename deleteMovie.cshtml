@@ -1,0 +1,26 @@
+﻿@{
+    var id=Request["id"];
+    var SQLSELECT = "SELECT * FROM Favorites where MovieID=@0";
+    var db = Database.Open("Movies_ASP");
+    var Movie = db.QuerySingle(SQLSELECT,id);
+    var MovieName=Movie.MovieName;
+
+    if(IsPost){
+        var SQLDELETE = "DELETE FROM Favorites WHERE MovieID=@0";
+        db.Execute(SQLDELETE,id);
+        Response.Redirect("movies.cshtml");
+    }
+}
+
+<h1>Delete a movie</h1>
+<p>Are you sure you want to delete the movie <strong>@MovieName ?</strong></p>
+<form action="" method="post">
+    <input type="submit" value="Yes"/>
+    <input type="button" title="hover over description of function" value="No" 
+    onclick="window.location = 'movies.cshtml'" />
+ @*   this break was in the example, but doesnt make a diff on the display *@
+ @*   <br/>*@
+</form>
+
+ 
+

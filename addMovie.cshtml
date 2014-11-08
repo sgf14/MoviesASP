@@ -1,0 +1,27 @@
+﻿@{
+     var MovieName="";
+     var MovieGenre="";
+     var MovieYear="";
+     //this inserts the recode in the DB note there is no entry validation here- that would be needed in PROD
+     // see  http://www.asp.net/webmatrix/tutorials/5-working-with-data
+       if(IsPost){
+         MovieName=Request["formMovieName"];
+         MovieGenre=Request["formGenre"];
+         MovieYear=Request["formReleaseYear"];
+         var SQLINSERT = "INSERT INTO Favorites (MovieName, Genre, ReleaseYear) VALUES (@0, @1, @2)";
+         var db = Database.Open("Movies_ASP");
+         db.Execute(SQLINSERT, MovieName, MovieGenre, MovieYear);
+         // after entry this sends up back to the main page 
+         Response.Redirect("movies.cshtml");
+       }
+}
+
+<h1 id="title">Add a New Movie to the database</h1>
+    <form action="" method="post">
+         <p>Name:<input type="text" name="formMovieName" /></p>
+         <p>Genre:<input type="text" name="formGenre" /></p>
+         <p>Year: <input type="text" name="formReleaseYear" /></p>
+         <p><input type="submit" value="Add Movie" /></p>
+    </form>
+@*This is one way to go back to main page- see above for cleaner version- upon completion of data update to db*@
+@*<a href="movies.cshtml">Go Back to List</a>*@

@@ -1,0 +1,29 @@
+﻿    @{
+       var db= Database.Open("Movies_ASP");
+       var sqlQ = "SELECT * FROM Favorites";
+       var data = db.Query(sqlQ);
+     }  
+
+
+<div id="movieslist">
+        <ol>
+            @foreach(var row in data)
+            {
+                // this is the asp 'get' command tying back to the db; its looping thourgh each w/ a foreach
+                // note 'row' did not need to be explicitly defined above, but . must match DB column name
+                //CRUD model: Create (post), Read (get), Update (?), Delete (delete) [look in Web App book again]
+                // in SQL this is INSERT, SELECT, UPDATE, DELETE
+                // the href of the title&contents in this case creates a link to the edit page; delete tage apears for each
+                <li><a href="editMovie.cshtml?id=@row.MovieID">@row.MovieName, @row.Genre, @row.ReleaseYear</a>
+                <a href="deleteMovie.cshtml?id=@row.MovieID"> Delete</a>
+                </li>
+            }
+@*            this is just from the orignal html list- kept for ref*@
+                @*<li><a href="#">It's a Wonderful Life</a></li>
+                <li><a href="#">Lord of the Rings</a></li>
+                <li><a href="#">The Fourth World</a></li>
+                <li><a href="#">The Lion King</a></li>*@
+         </ol>
+    
+    <a href="addMovie.cshtml">Add a new movie</a>
+</div>

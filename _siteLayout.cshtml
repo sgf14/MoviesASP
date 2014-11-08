@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+@*Webmatrix keystrokes- Comment= Cntl K+C; Uncomment= Cntl K+U*@
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>My Movies</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="styleSheet.css" />
+    </head>
+
+    <body>
+        <header>
+             <h1 id="title">A list of my Favorite Movies</h1>
+       </header>
+        @*Note this renderpage is only a placeholder its a C-Sharp (C#) method'
+        that allows me to call a specific file. 
+
+        This calls the main DB page(s) when you Run the program- top left.  you can also comment
+        it out to do testing, and call the specific file that needs to be tested. *@ 
+     @RenderPage("movies.cshtml") 
+
+        @*Render Body is required for _site layout.cshmtl to work.  if you comment out
+        the @RenderPage item- you will need to select the movies.cshtml file, right click and select
+        run in browser.  this uses the RenderBody to add the surrounding html
+        it also allows for the surrounding header/footer and style to maintained a different files/urls are called
+        *@ 
+     @RenderBody()
+
+<!-- Note the footer tag is html5 so not all browsers are compatible; like older versions-->
+@*so you would want to wrap this in a div tag and apply the style in the css file to the div tag as movieslist above*@
+          
+        <footer>
+            This site was built using Microsoft WebMatrix. 
+            <a href="http://www.microsoft.com/web/webmatrix" target="_blank">Download it now.</a>
+          </footer>
+    </body>
+</html>
